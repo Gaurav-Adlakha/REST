@@ -1,0 +1,394 @@
+#include<iostream>
+#include<conio.h>
+#include <math.h>
+using namespace std;
+
+//node * addLink( node *first, node *sec, int carry )
+// {
+//	 if (first = NULL ) { return 
+//    int val,a=0,b=0,nodedata=0;
+//	if(first) {
+//		a = first->data;
+//	}
+//	if(sec)   {
+//		b = sec->data;
+//	}
+//	//cout << a << b << endl;
+//	val = a + b + carry;
+//	
+//	//cout << nodedata << endl;
+//	node * head  = new node;
+//    head->data = val %10 ;
+//
+//	head->next =  addLink ( first ? first->next : NULL, sec ? sec->next : NULL , val / 10 ) ;
+//	printList (head);
+//	return head;
+// }
+//
+
+class node
+{
+public:
+  int data;
+  class node *next;
+};
+void printList ( node *head ){
+	node *temp = head;
+		while (temp != NULL )
+	{
+		cout << temp->data << endl;
+		temp = temp -> next;
+	}
+}
+void push(node **head, int data1){
+
+	node *newNode = new node;
+	newNode->data = data1;
+    newNode->next = *head;
+    *head = newNode;
+}
+void insertAfter (int afterNodeData,node *head) {
+    node *newNode = new node;
+	newNode->data = 2;
+
+	node *counter = head;
+	while ( counter->next  != NULL )
+	{
+		if (counter ->data = afterNodeData )
+		{
+			newNode->next = counter->next ;
+			counter->next = newNode; 
+		   break;
+		}
+		counter = counter ->next;
+	}
+	printList (head);
+}
+void insertINEnd (node *head)
+{
+	node *newNode = new node;
+	newNode->data = 5;
+	newNode->next = NULL;
+
+	node *counter = head;
+
+	while ( counter->next != NULL )
+	{
+		//cout<< counter->data << endl;
+		counter = counter ->next;
+		}
+	counter->next = newNode;
+	printList (head);
+}
+void deleteListNodec(node *head, int toBeDeletedNode)
+{
+   node *temp = head, *prev;
+   
+  // temp = head;
+   if (temp->data = toBeDeletedNode)
+   {
+	   delete(temp);  
+	   printList(head);
+	   return;
+   }
+   while ( temp->next != NULL && temp ->data != toBeDeletedNode)
+   {
+	   prev = temp;
+	   temp = temp->next;
+   }
+
+   prev->next= temp->next;
+   delete(temp); 
+
+   printList(head);
+}
+void deleteListAtGivenNode (node *head, int postion)
+{
+   node *temp = head;
+   if (postion ==0)
+   {
+      head= temp->next;
+	  free(temp);
+	  return;
+   }
+   for ( int i=0 ; temp != NULL && i < postion -1 ; i++)
+   {
+       temp = temp ->next;
+   }
+   
+   node *prev = temp->next->next;
+   delete(temp->next);
+   temp->next = prev;
+   printList (head);
+}
+void swapNodes (node *head, int x, int y)
+{
+  if (x == y){
+	  cout<<"both node are same" << endl;
+  }
+
+  node *currX = head;
+  node *prevX = NULL;
+  while ( currX != NULL && currX->data != x ){
+	  prevX = currX;
+	  currX= currX->next;
+  }
+
+  node *currY = head;
+  node *prevY = NULL;
+    while ( currY != NULL && currY->data !=y ){
+	  prevY = currY;
+	  currY= currY->next;
+  }
+
+	if ( prevX != NULL ){
+		prevX->next = currY;
+	}
+	else{
+		head= currY;
+	}
+
+	if ( prevY != NULL ){
+		prevY->next= currX;
+	}
+	else{
+		head = currX;
+	}
+
+	node *temp = currX->next;
+	currX->next=currY->next;
+	currY->next = temp;
+}
+void reverseLink(node **head)
+{
+    node *prev = NULL;
+	node *current = *head;
+	node *next;
+	while (current != NULL )
+	{ 
+		//cout << current->data << endl;
+		next = current ->next;
+		current->next = prev;
+		prev = current;
+		current = next;
+	}
+	*head = prev;
+}
+node * mergerLink ( node *l1, node *l2) 
+{   
+
+	node *p = l1;
+	node *q = l2;
+	node *curr = NULL;
+	node *head = NULL;
+		while  (p && q) 
+		{
+			   if (head == NULL)
+				 {
+							   if (p->data < q ->data) 
+							   {
+								   head = curr = p;
+								   p = p->next;
+							   }
+							   else
+							   {
+								   head=curr=q;
+								   q= q->next;
+							   }
+				  }
+			   else
+			   {
+							   if (p->data < q->data)
+							   {
+								   curr->next = p;
+								   curr = p;
+								   p = p->next;
+							   }
+							   else 
+							   {
+								   curr->next = q;
+								  curr = q;
+								   q= q->next;
+							   }
+			   }
+		 }
+		if (p) {  curr->next = p; }
+		if (q) {  curr->next = q; }	  
+
+		return head;
+	}
+ void revesa ( node *head){
+    node *curr = head;
+	node *prev = NULL;
+	node *next;
+
+	while (curr != NULL)
+	{
+		next = curr->next;
+		curr->next = prev;
+		prev = curr;
+		curr = next;
+	}
+	head = prev;
+	printList (head);
+ }
+ void rotateLink (node *head, int k)
+ {
+	node *temp = head;
+	node *prev = NULL;
+	int count= 0;
+	while (temp != NULL && count < k ){
+		prev = temp;
+		count ++;
+		temp = temp->next;
+	}
+	node *temp2;
+	temp2 = prev->next;
+
+	while ( temp2 != NULL ){
+		temp2= temp2->next;
+	}
+	temp2->next = prev;
+	printList (temp2);
+ }
+
+ void rotateLinkList ( node *head, int k )
+ {
+ node *temp;
+ temp = head;
+ int count =0 ;
+ node *flag;
+ node *headREf;
+
+ while ( temp != NULL && count < k){
+	 temp = temp ->next;
+	 count ++;
+ }
+ flag = temp;
+ headREf= temp->next;
+ while ( temp->next != NULL )
+ {
+	 temp = temp->next;
+ }
+temp->next = head;
+flag->next = NULL;
+printList(headREf);
+ }
+
+
+int main()
+{
+   node *first = NULL;
+   push (&first, 50);
+   push (&first, 40);
+   push (&first, 30);
+   push (&first, 20);
+   push (&first, 10);
+
+    node *sec = NULL;
+   	push (&sec, 4);
+	push (&sec, 2);
+
+	//printList (first);
+	//rotateLinkList (first,2);
+	//addLink (first,sec,0);
+	/*printList (first);
+	cout<< " ************" << endl;
+	printList (sec);*/
+
+
+	
+     getch();
+   // return 0;
+}
+
+
+//void moveNode (node **desRef, node **head
+//	node *newNode = *source;
+//	*source = newNode->next;
+//	newNode->next = *desRef;
+//    *desRef = newNode;
+//}
+//	
+//node* mergeSortedLink (node *head1, node *head2)
+//{
+//	node dummy;
+//    node*tail = &dummy;
+//	//dummy.next = NULL;
+//	if (head1->data < head2->data){
+//		moveNode(&(tail->next),& head1);
+//	}
+//	else {
+//		moveNode(&(tail->next),& head2);
+//	}
+//	tail = tail->next;
+//}
+//	return(dummy.next);
+//}
+
+
+
+
+//#include <iostream>
+//#include <conio.h>
+//using namespace std;
+//  
+//
+//  struct ListNode {
+//     int val;
+//     ListNode *next;
+//    // ListNode(int x) : val(x), next(NULL) {}
+// };
+//
+//
+//  void push(ListNode **head, int data1){
+//
+//	ListNode *newNode = new ListNode;
+//	newNode->val = data1;
+//    newNode->next = *head;
+//    *head = newNode;
+//}
+//
+//      ListNode *addNodes(ListNode *l1, ListNode *l2, int carry)
+//    {
+//        if(!l1 && !l2 && carry==0) return NULL;
+//        int a=0, b=0; 
+//        if(l1){ a=l1->val; }
+//        if(l2){ b=l2->val; }
+//        int value=a+b+carry; 
+//        ListNode *head=new ListNode;
+//		head->val= value;
+//        head->next=addNodes(l1? l1->next: NULL , l2?l2->next:NULL, value/10);     
+//		while ( head != NULL )
+//		{
+//			cout  << head->val  << endl;
+//			head = head->next;
+//		}
+//			return head;
+//    }
+//    ListNode *addTwoNumbers(ListNode *l1, ListNode *l2) {
+//        return addNodes(l1, l2, 0);
+//    }
+//    
+//
+//
+//  
+//int main()
+//{
+//	ListNode *first = NULL;
+//   push (&first, 5);
+//   push (&first, 3);
+//   push (&first, 1);
+//
+//    ListNode *sec = NULL;
+//   	push (&sec, 4);
+//	push (&sec, 2);
+//
+//	addTwoNumbers (first,sec);
+//	/*printList (first);
+//	cout<< " ************" << endl;
+//	printList (sec);*/
+//
+//	getch();
+//      return 0;
+//}
